@@ -1,0 +1,89 @@
+#include <Wire.h>
+#include "SSD1306Ascii.h"
+#include "SSD1306AsciiWire.h"
+
+// Endereços I2C
+#define ENDERECO_MUX 0x70
+#define ENDERECO_OLED 0x3C
+
+// Códigos Hexadecimais exatos para ligar os canais físicos SC/SD desejados
+#define CANAL_1 0x71 // Liga o par SC1/SD1
+#define CANAL_2 0x72 // Liga o par SC2/SD2
+#define CANAL_4 0x74 // Liga o par SC4/SD4
+#define CANAL_6 0x76 // Liga o par SC6/SD6
+
+// Cria o objeto para controlar as telas sem gastar RAM
+SSD1306AsciiWire display;
+
+/**
+ * Função para abrir a "porta" correta no multiplexador
+ * Recebe diretamente o código hexadecimal do canal
+ */
+void ativarCanal(uint8_t codigoCanal) {
+  Wire.beginTransmission(ENDERECO_MUX);
+  Wire.write(codigoCanal); 
+  Wire.endTransmission();
+}
+
+/**
+ * Função auxiliar para inicializar a tela economizando linhas de código
+ */
+void inicializarTela(uint8_t codigoCanal, String nomeTela) {
+  ativarCanal(codigoCanal);
+  // O comando &SH1106_128x64 garante a compatibilidade com o seu chip!
+  display.begin(&SH1106_128x64, ENDERECO_OLED);
+  display.setFont(Adafruit5x7);
+  display.clear();
+  display.println(nomeTela + " OK!");
+}
+
+void setup() {
+  Serial.begin(9600);
+  Wire.begin(); 
+  
+  Serial.println("Iniciando teste simultaneo das 4 telas...");
+
+  // Inicia fisicamente cada tela nos seus respectivos canais
+  inicializarTela(CANAL_1, "TELA 1 (CH1)");
+  inicializarTela(CANAL_2, "TELA 2 (CH2)");
+  inicializarTela(CANAL_4, "TELA 3 (CH4)");
+  inicializarTela(CANAL_6, "TELA 4 (CH6)");
+
+  delay(2000); // Aguarda 2 segundos para lermos as mensagens de "OK!"
+}
+
+void loop() {
+  // Pega o tempo em segundos desde que o Arduino foi ligado
+  unsigned long tempoSegundos = millis() / 1000;
+
+  // --- ATUALIZANDO A TELA 1 (Conectada no SC1/SD1) ---
+  ativarCanal(CANAL_1);
+  display.setCursor(0, 4); // Vai para a linha 4 da tela
+  display.set2X();         // Fonte grande
+  display.print("Tempo: ");
+  display.print(tempoSegundos);
+
+  // --- ATUALIZANDO A TELA 2 (Conectada no SC2/SD2) ---
+  ativarCanal(CANAL_2);
+  display.setCursor(0, 4); 
+  display.set2X();
+  display.print("Tempo: ");
+  display.print(tempoSegundos);
+
+  // --- ATUALIZANDO A TELA 3 (Conectada no SC4/SD4) ---
+  ativarCanal(CANAL_4);
+  display.setCursor(0, 4); 
+  display.set2X();
+  display.print("Tempo: ");
+  display.print(tempoSegundos);
+
+  // --- ATUALIZANDO A TELA 4 (Conectada no SC6/SD6) ---
+  ativarCanal(CANAL_6);
+  display.setCursor(0, 4); 
+  display.set2X();
+  display.print("Tempo: ");
+  display.print(tempoSegundos);
+
+  // Pequeno atraso para a contagem dos segundos ser suave
+  delay(1000); 
+}
