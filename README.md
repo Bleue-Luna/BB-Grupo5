@@ -38,6 +38,5 @@
 > **O jogo é totalmente dinâmico!** Você pode trocar a face do cubo ou substituí-lo por outro a qualquer momento para mudar o som instantaneamente.
 ![Demonstração do Jogo]()
 >
-<img width="303" height="140" alt="image" src="https://github.com/user-attachments/assets/c35e970e-cd7d-444d-a280-e0246e275291" />
-
+<img src="Captura de Tela 2026-06-10 às 15.39.01.png"></img>
 
