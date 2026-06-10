@@ -15,7 +15,7 @@
       <p>O jogo possui <strong>5 cubos</strong> no total. Cada cubo representa um <strong>instrumento musical diferente</strong>, e cada face desse cubo possui um <strong>ritmo específico</strong> impresso.</p>
     </td>
     <td width="50%" valign="top">
-      <h4>🎛️ O BeatBlock</h4>
+      <h4>🎛️ O BitBlock</h4>
       <p>É o tabuleiro/mesa central do jogo. Possui <strong>4 slots disponíveis</strong> para encaixar e identificar os cubos.</p>
     </td>
   </tr>
@@ -51,8 +51,11 @@
 
 ---
 
+
 > [!TIP]
 > **O jogo é totalmente dinâmico!** Você pode trocar a face do cubo ou substituí-lo por outro a qualquer momento para mudar o som instantaneamente.
->
+
+
+## 🔌 Circuito do Arduino:
 <img src="Captura de Tela 2026-06-10 às 15.39.01.png" width="400px"></img>
 
