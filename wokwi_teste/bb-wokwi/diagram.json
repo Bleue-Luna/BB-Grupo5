@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-breadboard-half",
+      "id": "bb1",
+      "top": -3,
+      "left": -198.8,
+      "attrs": { "color": "#eeefed" }
+    },
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": -76.2, "left": 162.6, "attrs": {} },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid1",
+      "top": 299.64,
+      "left": -492.55,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid2",
+      "top": 299.64,
+      "left": -310.15,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid3",
+      "top": 299.64,
+      "left": -127.75,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid4",
+      "top": 289.04,
+      "left": 54.65,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": -150.46,
+      "left": -354.97,
+      "attrs": { "i2cAddress": "0x3c" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled2",
+      "top": -150.46,
+      "left": -239.77,
+      "attrs": { "i2cAddress": "0x3d" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled3",
+      "top": -150.46,
+      "left": -114.97,
+      "attrs": { "i2cAddress": "0x3e" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled4",
+      "top": -150.46,
+      "left": 19.43,
+      "attrs": { "i2cAddress": "0x3f" }
+    }
+  ],
+  "connections": [
+    [ "uno:5V", "bb1:tp.25", "red", [ "v19.1", "h-169", "v-134.4" ] ],
+    [ "uno:3.3V", "bb1:bp.25", "red", [ "v67.1", "h-207" ] ],
+    [ "uno:GND.3", "bb1:tn.25", "black", [ "v28.7", "h-197.6", "v-124.7" ] ],
+    [ "bb1:tn.1", "bb1:bn.1", "black", [ "v-0.1", "h-27.2", "v174.1" ] ],
+    [ "oled2:VCC", "bb1:tp.3", "red", [ "v-19.2", "h67.35", "v172.8", "h-20.8" ] ],
+    [ "oled2:GND", "bb1:tn.4", "black", [ "v-28.8", "h-172.8", "v192", "h238.4" ] ],
+    [ "oled1:VCC", "bb1:tp.6", "red", [ "v-9.6", "h182.55", "v162.9" ] ],
+    [ "oled1:GND", "bb1:tn.6", "black", [ "v-19.2", "h-57.6", "v182.5" ] ],
+    [ "oled3:VCC", "bb1:tp.17", "red", [ "v-28.8", "h76.95" ] ],
+    [ "oled3:GND", "bb1:tn.18", "black", [ "v-38.4", "h96" ] ],
+    [ "oled4:VCC", "bb1:tp.21", "red", [ "v-28.8", "h76.95", "v144", "h-86.4" ] ],
+    [ "oled4:GND", "bb1:tn.22", "black", [ "v-38.4", "h96", "v163.2", "h-86.4" ] ],
+    [ "rfid1:3.3V", "bb1:bp.3", "red", [ "v-48", "h267.2" ] ],
+    [ "rfid1:GND", "bb1:bn.4", "black", [ "v-48", "h259.2" ] ],
+    [ "rfid2:3.3V", "bb1:bp.6", "red", [ "v-48", "h123.2" ] ],
+    [ "rfid3:3.3V", "bb1:bp.11", "red", [ "v0" ] ],
+    [ "rfid3:GND", "bb1:bn.13", "black", [ "v0" ] ],
+    [ "rfid4:3.3V", "bb1:bp.21", "red", [ "v-47", "h-68.8" ] ],
+    [ "rfid4:GND", "bb1:bn.22", "black", [ "v-47", "h-78.4" ] ],
+    [ "rfid1:RST", "bb1:5b.g", "orange", [ "v-96", "h259.2", "v-48" ] ],
+    [ "rfid2:GND", "bb1:bn.7", "black", [ "v-47", "h113.6" ] ],
+    [ "rfid2:RST", "bb1:5b.h", "orange", [ "v-95", "h76.8", "v-38.4" ] ],
+    [ "rfid3:RST", "bb1:5b.i", "orange", [ "v-67.2", "h-105.6", "v-57.6" ] ],
+    [ "rfid4:RST", "bb1:5b.j", "orange", [ "v-56.6", "h-288", "v-48" ] ],
+    [
+      "bb1:5b.f",
+      "uno:9",
+      "orange",
+      [ "v-9.6", "h268.8", "v57.6", "h326.4", "v-307.2", "h-135.2" ]
+    ],
+    [ "rfid1:MISO", "bb1:13b.g", "limegreen", [ "v-86.4", "h307.2", "v-19.2" ] ],
+    [ "rfid2:MISO", "bb1:13b.h", "limegreen", [ "v-85.4", "h124.8", "v-48" ] ],
+    [ "rfid3:MISO", "bb1:13b.i", "limegreen", [ "v-96", "h-57.6", "v-28.8" ] ],
+    [ "rfid4:MISO", "bb1:13b.j", "limegreen", [ "v-85.4", "h-240", "v-19.2" ] ],
+    [ "rfid1:MOSI", "bb1:21b.g", "blue", [ "v-76.8", "h374.4", "v-28.8" ] ],
+    [ "rfid2:MOSI", "bb1:21b.h", "blue", [ "v-75.8", "h192", "v-58.6" ] ],
+    [ "rfid3:MOSI", "bb1:21b.j", "blue", [ "v-76.8", "h9.6", "v-38.4" ] ],
+    [ "rfid4:MOSI", "bb1:21b.i", "blue", [ "v-66.2", "h-172.8", "v-48" ] ],
+    [ "rfid1:SCK", "bb1:24b.g", "yellow", [ "v-38.4", "h393.6", "v-19.2" ] ],
+    [ "rfid2:SCK", "bb1:24b.h", "yellow", [ "v-37.4", "h211.2", "v-67.2" ] ],
+    [ "rfid3:SCK", "bb1:24b.i", "yellow", [ "v-38.4", "h28.8", "v-67.2" ] ],
+    [
+      "bb1:13b.f",
+      "uno:12",
+      "limegreen",
+      [ "v-9.6", "h192", "v57.6", "h326.4", "v-326.4", "h-163.7" ]
+    ],
+    [
+      "bb1:21b.f",
+      "uno:11",
+      "blue",
+      [ "v-9.6", "h115.2", "v57.6", "h326.4", "v-316.8", "h-154.2" ]
+    ],
+    [ "rfid4:SCK", "bb1:24b.j", "yellow", [ "v-27.8", "h-153.6", "v-67.2" ] ],
+    [
+      "bb1:24b.f",
+      "uno:13",
+      "yellow",
+      [ "v-9.6", "h86.4", "v57.6", "h326.4", "v-336", "h-173.2" ]
+    ],
+    [
+      "rfid1:SDA",
+      "uno:5",
+      "white",
+      [ "v-9.6", "h57.6", "v268.8", "h796.8", "v-643.2", "h-138.2" ]
+    ],
+    [
+      "rfid2:SDA",
+      "uno:4",
+      "magenta",
+      [ "v-8.6", "h48", "v259.2", "h614.4", "v-624", "h-119.1" ]
+    ],
+    [ "rfid3:SDA", "uno:3", "cyan", [ "v-9.6", "h57.6", "v249.6", "h412.8", "v-604.8", "h-100" ] ],
+    [
+      "rfid4:SDA",
+      "uno:2",
+      "orange",
+      [ "v-8.6", "h57.6", "v249.6", "h220.8", "v-585.6", "h-80.9" ]
+    ],
+    [ "oled1:SCL", "bb1:3t.b", "yellow", [ "v-9.6", "h173.1", "v211.2" ] ],
+    [ "oled3:SCL", "bb1:3t.c", "yellow", [ "v-9.6", "h-66.9", "v220.8" ] ],
+    [ "oled4:SCL", "bb1:3t.d", "yellow", [ "v-9.6", "h-201.3", "v230.4" ] ],
+    [ "bb1:3t.e", "uno:A5", "yellow", [ "v19.2", "h316.8", "v48", "h249.6" ] ],
+    [ "oled2:SDA", "bb1:19t.a", "violet", [ "v-19.2", "h172.87", "v211.2" ] ],
+    [ "oled1:SDA", "bb1:19t.b", "violet", [ "v-19.2", "h288.07", "v220.8" ] ],
+    [ "oled3:SDA", "bb1:19t.c", "violet", [ "v-19.2", "h48.07", "v259.2" ] ],
+    [ "oled4:SDA", "bb1:19t.d", "violet", [ "v-19.2", "h-86.33", "v259.2" ] ],
+    [ "bb1:19t.e", "uno:A4", "violet", [ "v9.6", "h144", "v76.8", "h264.6" ] ],
+    [ "oled2:SCL", "bb1:3t.a", "yellow", [ "v-9.6", "h57.9", "v192" ] ]
+  ],
+  "dependencies": {}
+}
