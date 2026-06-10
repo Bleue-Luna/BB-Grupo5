@@ -37,4 +37,4 @@
 > [!TIP]
 > **O jogo é totalmente dinâmico!** Você pode trocar a face do cubo ou substituí-lo por outro a qualquer momento para mudar o som instantaneamente.
 ![Demonstração do Jogo]()
-<img src="blob:https://gemini.google.com/9be08e51-1948-4691-820b-be11d0e3050d" />
+
