@@ -58,4 +58,10 @@
 
 ## 🔌 Circuito do Arduino:
 <img src="Captura de Tela 2026-06-10 às 15.39.01.png" width="400px"></img>
+<img width="356" height="371" alt="image" src="https://github.com/user-attachments/assets/9b95897b-8cdd-458b-9476-62062ee06078" />
+<img width="815" height="371" alt="image" src="https://github.com/user-attachments/assets/12adfc12-76be-4d74-9c7f-ce1362fddf6e" />
+<img width="430" height="255" alt="image" src="https://github.com/user-attachments/assets/e8907d4e-6b08-4020-93eb-d3e7fbdfa846" />
+
+
+
 
