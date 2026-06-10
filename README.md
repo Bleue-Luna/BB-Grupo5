@@ -36,3 +36,4 @@
 
 > [!TIP]
 > **O jogo é totalmente dinâmico!** Você pode trocar a face do cubo ou substituí-lo por outro a qualquer momento para mudar o som instantaneamente.
+![Banner](https://imgur.com/a/nKZ2nrQ.png)
