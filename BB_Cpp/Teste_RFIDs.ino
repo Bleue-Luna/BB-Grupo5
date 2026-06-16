@@ -1,186 +1,72 @@
-// DEFINIÇÕES
-#define DEBUG
-
-// LIBRARIES
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SH110X.h>
 #include <SPI.h>
 #include <MFRC522.h>
 
-// ==========================================
-// --- GLOBAIS (RFID) ---
-// ==========================================
-const byte numReaders = 1;
-const byte ssPins[]   = {2};
-const byte resetPins[] = {6};
+const byte numLeitores = 4;
 
-MFRC522 mfrc522[numReaders];
-String currentIDs[numReaders];
+const byte sdaPins[numLeitores] = {10, 7, 6, 5};
+const byte rstPin = 9; 
 
-// ==========================================
-// --- GLOBAIS (TELAS OLED E MULTIPLEXADOR) ---
-// ==========================================
-const byte numScreens = 4;
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
+MFRC522 mfrc522[numLeitores] = {
+  MFRC522(sdaPins[0], rstPin),
+  MFRC522(sdaPins[1], rstPin),
+  MFRC522(sdaPins[2], rstPin),
+  MFRC522(sdaPins[3], rstPin)
+};
 
-Adafruit_SH1106G display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
-
-const byte oledChannels[] = {0, 2, 4, 6};
-
-void tcaselect(uint8_t canal) {
-  if (canal > 7) return;
-  Wire.beginTransmission(0x70);
-  Wire.write(1 << canal);
-  Wire.endTransmission();
-}
-
-// ==========================================
-// --- FUNÇÕES DE DESENHO ---
-// ==========================================
-void printCentralizado(const char* texto, int y, int tamanho_fonte) {
-  display.setTextSize(tamanho_fonte);
-  int largura_texto = strlen(texto) * (6 * tamanho_fonte);
-  int x = (SCREEN_WIDTH - largura_texto) / 2;
-  display.setCursor(x, y);
-  display.print(texto);
-}
-
-void printCentralizado(String texto, int y, int tamanho_fonte) {
-  display.setTextSize(tamanho_fonte);
-  int largura_texto = texto.length() * (6 * tamanho_fonte);
-  int x = (SCREEN_WIDTH - largura_texto) / 2;
-  display.setCursor(x, y);
-  display.print(texto);
-}
-
-void desenharTelaAguardando(int indice_tela) {
-  tcaselect(oledChannels[indice_tela]);
-  display.clearDisplay();
-  display.setTextColor(SH110X_WHITE, SH110X_BLACK);
-  display.drawRoundRect(2, 2, 124, 60, 4, SH110X_WHITE);
-  printCentralizado("TELA", 8, 1);
-  char numStr[2] = {(char)('1' + indice_tela), '\0'};
-  printCentralizado(numStr, 22, 4);
-  printCentralizado("Aguardando...", 50, 1);
-  display.display();
-}
-
-void desenharTelaLido(int indice_tela, String tagID) {
-  tcaselect(oledChannels[indice_tela]);
-  display.clearDisplay();
-  display.setTextColor(SH110X_WHITE, SH110X_BLACK);
-  display.drawRoundRect(2, 2, 124, 60, 4, SH110X_WHITE);
-  printCentralizado("LIDO!", 8, 1);
-  char numStr[2] = {(char)('1' + indice_tela), '\0'};
-  printCentralizado(numStr, 22, 4);
-  printCentralizado(tagID, 50, 1);
-  display.display();
-}
-
-// ==========================================
-// --- SETUP ---
-// ==========================================
 void setup() {
-  Serial.begin(9600);
-  Serial.println(F("Iniciando..."));
+  Serial.begin(9600);   //iniciando monitor serial
+  SPI.begin();          //iniciando barramento SPI do arduino
 
-  Wire.begin();
-  Wire.setClock(100000);
-  SPI.begin();
+  Serial.println("Preparando os leitores...");
+  for(uint8_t i = 0; i < numLeitores; i++) {
+    pinMode(sdaPins[i], OUTPUT);
+    digitalWrite(sdaPins[i], HIGH);
+  }
+  delay(50);
 
-  // --- SETUP DOS LEITORES (uma única vez, com delay adequado) ---
-  for (uint8_t i = 0; i < numReaders; i++) {
-    mfrc522[i].PCD_Init(ssPins[i], resetPins[i]);
-    mfrc522[i].PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
-    delay(100); // ← tempo para cada leitor estabilizar antes do próximo
+  Serial.println("Inicializando os leitores...");
+  for (uint8_t i = 0; i < numLeitores; i++) {
+    mfrc522[i].PCD_Init();
+    //mfrc522[i].PCD_SetAntennaGain(mfrc522[i].RxGain_max);
 
-    #ifdef DEBUG
-    byte v = mfrc522[i].PCD_ReadRegister(MFRC522::VersionReg);
-    Serial.print(F("Leitor "));
+    Serial.print(F("Leitor ["));
     Serial.print(i);
-    Serial.print(F(" versao: 0x"));
-    Serial.println(v, HEX);
-    #endif
+    Serial.print(F("] Firmware do chip: "));
+    mfrc522[i].PCD_DumpVersionToSerial();
   }
 
-  // --- SETUP DAS TELAS ---
-  for (uint8_t i = 0; i < numScreens; i++) {
-    tcaselect(oledChannels[i]);
-    if (display.begin(0x3C, true)) {
-      display.clearDisplay();
-      display.display();
-    } else {
-      #ifdef DEBUG
-      Serial.print(F("Falha ao iniciar tela no canal "));
-      Serial.println(oledChannels[i]);
-      #endif
-    }
-  }
-
-  for (uint8_t i = 0; i < numScreens; i++) {
-    desenharTelaAguardando(i);
-  }
-
-  #ifdef DEBUG
-  Serial.println(F("--- END SETUP ---"));
-  #endif
+  Serial.println("Aguardando tag...");
 }
 
-// ==========================================
-// --- LOOP ---
-// ==========================================
 void loop() {
-  bool changedValue = false;
+  //O arduino vai ficar girando nesse carrossel olhando um leitor por vez
+  for (uint8_t i = 0; i < numLeitores; i++) {
 
-  for (uint8_t i = 0; i < numReaders; i++) {
-    String readRFID = "";
-
-    Serial.print(F("Verificando leitor "));
-    Serial.println(i);
-
-    if (mfrc522[i].PICC_IsNewCardPresent() && mfrc522[i].PICC_ReadCardSerial()) {
-      readRFID = dump_byte_array(mfrc522[i].uid.uidByte, mfrc522[i].uid.size);
+    // Se não houver cartão neste leitor específico, vá para o próximo
+    if (!mfrc522[i].PICC_IsNewCardPresent()) {
+      continue;
     }
 
-    if (readRFID != currentIDs[i]) {
-      currentIDs[i] = readRFID;
-      changedValue = true;
-
-      if (readRFID != "") {
-        desenharTelaLido(i, readRFID);
-      } else {
-        desenharTelaAguardando(i);
-      }
-    }
-
-    mfrc522[i].PICC_HaltA();
-    mfrc522[i].PCD_StopCrypto1();
-    delay(10);
-  }
-
-  #ifdef DEBUG
-  if (changedValue) {
-    for (uint8_t i = 0; i < numReaders; i++) {
-      Serial.print(F("Leitor "));
+    // Se houver cartão, mas houve falha na leitura de seu serial, também pula.
+    if (!mfrc522[i].PICC_ReadCardSerial()) {
+      Serial.print(F("-> LEITOR ["));
       Serial.print(i);
-      Serial.print(F(") tag: "));
-      Serial.println(currentIDs[i] == "" ? "NENHUMA" : currentIDs[i]);
+      Serial.println(F("] falhou a ler uma tag."));
+      continue;
     }
-    Serial.println(F("---"));
-  }
-  #endif
-}
 
-// ============== FUNÇÕES AUXILIARES ==============
-String dump_byte_array(byte *buffer, byte bufferSize) {
-  String uidStr = "";
-  for (byte i = 0; i < bufferSize; i++) {
-    if (buffer[i] < 0x10) uidStr += "0";
-    uidStr += String(buffer[i], HEX);
-    if (i < bufferSize - 1) uidStr += " ";
+    Serial.print(F("-> LEITOR ["));
+    Serial.print(i);
+    Serial.println(F("] leu a tag com UID: "));
+    // Imprime UID da tag em hexadecimal
+    for (byte j = 0; j < mfrc522[i].uid.size; j++) {
+      Serial.print(mfrc522[i].uid.uidByte[j] < 0x10 ? " 0" : " ");
+      Serial.print(mfrc522[i].uid.uidByte[j], HEX);
+    }
+    Serial.println();
+
+    // Manda esta RFID dormir para que não trave o loop
+    mfrc522[i].PICC_HaltA();
   }
-  uidStr.toUpperCase();
-  return uidStr;
+  delay(50);
 }
