@@ -1,0 +1,102 @@
+#include <SPI.h>
+#include <MFRC522.h>
+#include <Wire.h>
+
+// ==========================================
+// --- DEFINIÇÃO DOS PINOS ---
+// ==========================================
+// Pinos Leitor 3 (Primeiro leitor conectado ao Arduino B)
+#define SS_PIN_3  10
+#define RST_PIN_3 9
+
+// Pinos Leitor 4 (Segundo leitor conectado ao Arduino B)
+#define SS_PIN_4  6
+#define RST_PIN_4 9
+
+// Instanciação dos leitores
+MFRC522 rfid3(SS_PIN_3, RST_PIN_3);
+MFRC522 rfid4(SS_PIN_4, RST_PIN_4);
+
+// ==========================================
+// --- VARIÁVEIS GLOBAIS ---
+// ==========================================
+// Buffer I2C: 16 bytes totais para enviar ao Arduino A
+// Índices 0 a 7: Dados do Leitor 3 (índice 0 = tamanho do UID, índices 1-7 = bytes do UID)
+// Índices 8 a 15: Dados do Leitor 4 (índice 8 = tamanho do UID, índices 9-15 = bytes do UID)
+byte dadosI2C[16] = {0}; 
+
+void setup() {
+  Serial.begin(9600); // Iniciado apenas para debug visual no Monitor Serial do Ard B, se precisar
+  SPI.begin();        // Inicia o barramento SPI
+  
+  // Inicializa os leitores RFID
+  rfid3.PCD_Init();
+  rfid4.PCD_Init();
+  
+  // Aumenta o ganho da antena para leitura mais fácil (opcional, mas recomendado)
+  rfid3.PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
+  rfid4.PCD_SetAntennaGain(MFRC522::PCD_RxGain::RxGain_max);
+
+  // Inicializa o I2C como Escravo (Slave) no endereço 8
+  Wire.begin(8);                
+  Wire.onRequest(enviarDados);  // Define a função que será chamada quando o Ard A pedir dados
+  
+  Serial.println(F("Arduino B Pronto. Aguardando leituras..."));
+}
+
+void loop() {
+  // -----------------------------------------------------
+  // VERIFICAÇÃO DO LEITOR 3
+  // -----------------------------------------------------
+  rfid3.PCD_Init(); // Re-inicializa para evitar travamentos do módulo
+  if (rfid3.PICC_IsNewCardPresent() && rfid3.PICC_ReadCardSerial()) {
+    
+    dadosI2C[0] = rfid3.uid.size; // Salva o tamanho do UID
+    
+    // Salva os bytes do cartão (geralmente 4 bytes, mas pode ser até 7)
+    for (byte i = 0; i < rfid3.uid.size && i < 7; i++) {
+      dadosI2C[i + 1] = rfid3.uid.uidByte[i];
+    }
+    
+    Serial.println(F("Cartao lido no Leitor 3!"));
+    
+    // Trava a leitura contínua do mesmo cartão e para a criptografia
+    rfid3.PICC_HaltA();
+    rfid3.PCD_StopCrypto1();
+  }
+
+  // -----------------------------------------------------
+  // VERIFICAÇÃO DO LEITOR 4
+  // -----------------------------------------------------
+  rfid4.PCD_Init();
+  if (rfid4.PICC_IsNewCardPresent() && rfid4.PICC_ReadCardSerial()) {
+    
+    dadosI2C[8] = rfid4.uid.size; // Salva o tamanho do UID (começa no índice 8 do array)
+    
+    // Salva os bytes do cartão
+    for (byte i = 0; i < rfid4.uid.size && i < 7; i++) {
+      dadosI2C[9 + i] = rfid4.uid.uidByte[i];
+    }
+    
+    Serial.println(F("Cartao lido no Leitor 4!"));
+    
+    // Trava a leitura contínua do mesmo cartão e para a criptografia
+    rfid4.PICC_HaltA();
+    rfid4.PCD_StopCrypto1();
+  }
+}
+
+// ==========================================
+// --- FUNÇÃO DE RESPOSTA I2C ---
+// ==========================================
+// Essa função é disparada automaticamente assim que o Arduino A executa "Wire.requestFrom(8, 16)"
+void enviarDados() {
+  // Envia os 16 bytes de uma vez para o Arduino A
+  Wire.write(dadosI2C, 16);
+  
+  // Limpa o indicador de tamanho dos cartões no buffer após o envio.
+  // Isso avisa ao Arduino A que os cartões foram retirados e evita que o Ard A 
+  // fique preso na tela de "LIDO!" infinitamente.
+  dadosI2C[0] = 0; 
+  dadosI2C[8] = 0; 
+}
