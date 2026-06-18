@@ -11,7 +11,7 @@
 <ol>
   <li><strong>Processamento Central:</strong> A placa Arduino Uno R3 atua como a unidade central de processamento, gerenciando as leituras de entrada e atualizando as saídas visuais e sonoras simultaneamente.</li>
   <li><strong>Sensoriamento dos Slots:</strong> Os 4 Módulos Leitores RFID RC522 monitoram constantemente a presença das tags fixadas no interior dos cubos. Ao aproximar um cubo de um slot, o leitor decodifica o identificador único (UID) para determinar qual instrumento e ritmo foram inseridos.</li>
-  <li><strong>Interface Visual Compartilhada:</strong> As 4 Telas OLED se comunicam de forma multiplexada ou individual utilizando um barramento de comunicação I2C compartilhado[cite: 1]. Isso otimiza o uso de pinos do Arduino, permitindo exibir dados individuais de status para cada slot de maneira independente.</li>
+  <li><strong>Interface Visual Compartilhada:</strong> As 4 Telas OLED se comunicam de forma multiplexada ou individual utilizando um barramento de comunicação I2C compartilhado. Isso otimiza o uso de pinos do Arduino, permitindo exibir dados individuais de status para cada slot de maneira independente.</li>
   <li><strong>Controle de Modo:</strong> Um potenciômetro analógico realiza a leitura de tensão para alternar as instruções do sistema entre a reprodução livre e o Modo das Emoções.</li>
 </ol>
 
