@@ -43,7 +43,7 @@
 </p>
 
 <p align="center">
-  <img src="image_dfe3bf.jpg" width="850px" alt="Esquemático Geral do Circuito BeatBlock">
+  <img src="Foto do Circuito.png" width="850px" alt="Esquemático Geral do Circuito BeatBlock">
 </p>
 
 > [!NOTE]
