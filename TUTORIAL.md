@@ -1,7 +1,7 @@
 # 📖 Artigo Tutorial: Como Construir e Jogar o BeatBlock
 
 <p align="justify">
-  Seja bem-vindo ao tutorial oficial do BeatBlock! Este material foi desenvolvido de forma didática e acessível para que educadores, terapeutas, makers e entusiastas possam replicar e utilizar este protótipo focado no estímulo de crianças com Transtorno do Espectro Autista (TEA).
+  Seja muito bem-vindo ao tutorial oficial do BeatBlock! Este material foi desenvolvido de forma didática e acessível para que educadores, terapeutas, makers e entusiastas possam replicar e utilizar este protótipo focado no estímulo de crianças com Transtorno do Espectro Autista (TEA).
 </p>
 
 ---
