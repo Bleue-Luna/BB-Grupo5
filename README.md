@@ -46,13 +46,13 @@
   Este modo consiste em <strong>"sintonizar"</strong> de um a quatro cubos com a emoção que estiver sendo exibida na tela. O objetivo é fazer com que a combinação de ritmos e instrumentos formada pelos cubos se assemelhe e expresse a sensação daquela emoção específica.
 </p>
 
-> [!NOTE]
+> [!NOTE QUE]
 > Este modo estimula o reconhecimento afetivo e a associação sonora com sentimentos, sendo uma excelente ferramenta de suporte para o desenvolvimento de crianças com TEA.
 
 ---
 
 
-> [!TIP]
+> [!DICA DE OURO]
 > **O jogo é totalmente dinâmico!** Você pode trocar a face do cubo ou substituí-lo por outro a qualquer momento para mudar o som instantaneamente.
 
 
