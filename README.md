@@ -40,15 +40,37 @@
   Para alternar entre os modos presentes no <strong>BeatBlock</strong>, basta girar o potenciômetro até o limite. Ao fazer isso, a interface mudará o comportamento do jogo.
 </p>
 
-### 😀 O Modo das Emoções
+## 🔄 Engenharia e Adaptações de Hardware: De RFID para Botões
 
 <p align="justify">
-  Este modo consiste em <strong>"sintonizar"</strong> de um a quatro cubos com a emoção que estiver sendo exibida na tela. O objetivo é fazer com que a combinação de ritmos e instrumentos formada pelos cubos se assemelhe e expresse a sensação daquela emoção específica.
+  Durante a fase de desenvolvimento prático e testes de bancada do <strong>BeatBlock</strong>, a equipe enfrentou desafios técnicos complexos que exigiram uma mudança estratégica no projeto de hardware. Embora a arquitetura ideal previsse a identificação dos cubos via sensores RFID RC522, o circuito final foi adaptado para operar utilizando <strong>botões físicos (push buttons)</strong> nos slots.
 </p>
 
-> [!NOTE]
-> Este modo estimula o reconhecimento afetivo e a associação sonora com sentimentos, sendo uma excelente ferramenta de suporte para o desenvolvimento de crianças com TEA.
+---
 
+### ⚠️ Desafios Enfrentados com o RFID
+
+<p align="justify">
+  A decisão de substituir os leitores RFID por botões mecânicos foi fundamentada nos seguintes motivos:
+</p>
+
+<ul>
+  <li><strong>Conflitos no Barramento SPI:</strong> O gerenciamento simultâneo de 4 leitores RFID compartilhando as mesmas linhas de dados do Arduino Uno apresentou alta complexidade de software, gerando atrasos na leitura e falsos positivos.</li>
+  <li><strong>Problemas de Alimentação:</strong> Instabilidade na alimentação de 3.3V / Problemas de mau contato crônico na protoboard / Queima de um dos módulos durante as soldas.</li>
+</ul>
+
+---
+
+### 🎯 O Impacto na Experiência do Usuário
+
+<p align="justify">
+  Apesar da substituição dos componentes internos, é importante destacar que <strong>a dinâmica lúdica, a lógica pedagógica e o objetivo do jogo permaneceram rigorosamente os mesmos</strong>. Os botões físicos foram posicionados estrategicamente no fundo de cada slot para que o próprio peso do cubo (ou o ato de encaixá-lo) acione o mecanismo. Dessa forma, o protótipo mantém sua entrega de valor focada na acessibilidade e no estímulo sensorial para crianças com TEA.
+</p>
+
+---
+
+> [!IMPORTANT]
+> **Nota de Desenvolvimento (MVP):** Os arquivos de esquemático original e o tutorial mantêm a documentação da arquitetura RFID como a visão de longo prazo para o produto. A implementação atual com botões representa a solução de engenharia adotada para a entrega de um MVP 100% funcional, estável e seguro.
 ---
 
 
