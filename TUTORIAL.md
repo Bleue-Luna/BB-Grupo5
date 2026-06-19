@@ -73,3 +73,24 @@
 
 > [!TIP]
 > **Dica Pedagógica:** O jogo é totalmente em tempo real! Incentive a criança a girar os cubos ou trocá-los de lugar de forma livre para explorar novas texturas sonoras e associações afetivas.
+
+---
+
+## 🔄 Adaptação para a Versão Final (Com Botões)
+
+<p align="justify">
+  Caso você esteja replicando a versão estável de produção do <strong>BeatBlock</strong> utilizando botões físicos (push buttons) em vez de módulos RFID, a lógica de montagem e teste segue os passos adaptados abaixo.
+</p>
+
+### 🛠️ Ajuste nos Materiais
+* Substitua os 4 Módulos RFID RC522 por **4x Botões Físicos (Push Buttons)**.
+* Os cubos didáticos não precisam de tags internas; eles atuarão mecanicamente pressionando o botão ao serem encaixados.
+
+### 🏗️ Passo a Passo Adaptado
+1. **Montagem dos Slots:** Fixe um push button no fundo de cada um dos 4 slots do tabuleiro, garantindo que a queda ou o encaixe do cubo seja suficiente para pressionar o botão.
+2. **Conexão Elétrica:** Conecte um dos terminais de cada botão ao pino de Terra (GND) compartilhado na protoboard. O outro terminal deve ir direto para um pino digital exclusivo do Arduino.
+3. **Configuração do Software:** No código do Arduino, ative os resistores internos de *Pull-Up* para os pinos dos botões (usando `INPUT_PULLUP`). Isso elimina a necessidade de resistores externos na protoboard, deixando o circuito mais limpo.
+
+> [!TIP]
+> **Dica de Teste:** Para verificar se a pressão do cubo está acionando o botão corretamente, abra o Monitor Serial da Arduino IDE. O status do pino deve mudar de `1` (solto) para `0` (pressionado) assim que o bloco for inserido.
+> 
