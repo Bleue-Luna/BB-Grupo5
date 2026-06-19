@@ -48,3 +48,25 @@
 
 > [!NOTE]
 > Certifique-se de conferir as soldas nas barras de pinos dos módulos RFID e das telas OLED para evitar mau contato nas trilhas da protoboard durante o manuseio dos cubos de jogo.
+
+---
+
+## 🎛️ Circuito Alternativo: Implementação com Push Buttons (MVP)
+
+<p align="justify">
+  Para a versão funcional implementada, o barramento de dados SPI (utilizado anteriormente pelo RFID) foi simplificado para leituras digitais diretas usando botões mecânicos. A lógica de ativação por nível lógico baixo (Low) garante estabilidade contra ruídos eletromagnéticos.
+</p>
+
+### 📊 Nova Matriz de Conexões para os Slots (Botões)
+
+| Componente / Slot | Pino do Botão | Conexão no Arduino | Comportamento Lógico |
+| :--- | :--- | :--- | :--- |
+| **Slot 1 (Instrumento 1)** | Terminal A / Terminal B | GND / **Pino D2** | Solto: `HIGH` (5V) \| Pressionado: `LOW` (0V) |
+| **Slot 2 (Instrumento 2)** | Terminal A / Terminal B | GND / **Pino D3** | Solto: `HIGH` (5V) \| Pressionado: `LOW` (0V) |
+| **Slot 3 (Instrumento 3)** | Terminal A / Terminal B | GND / **Pino D4** | Solto: `HIGH` (5V) \| Pressionado: `LOW` (0V) |
+| **Slot 4 (Instrumento 4)** | Terminal A / Terminal B | GND / **Pino D5** | Solto: `HIGH` (5V) \| Pressionado: `LOW` (0V) |
+
+> [!NOTE]
+> Os pinos digitais **[D2, D3, D4 e D5]** listados acima são sugestões padrão. Caso você tenha utilizado pinos diferentes na sua montagem final, lembre-se de alterar os valores nesta tabela e no código-fonte do projeto.
+
+### 🧠 Fluxo Lógica de Operação (Botões)
