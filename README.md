@@ -44,27 +44,11 @@
 
 <p align="justify">
   Durante a fase de desenvolvimento prático e testes de bancada do <strong>BeatBlock</strong>, a equipe enfrentou desafios técnicos complexos que exigiram uma mudança estratégica no projeto de hardware. Embora a arquitetura ideal previsse a identificação dos cubos via sensores RFID RC522, o circuito final foi adaptado para operar utilizando <strong>botões físicos (push buttons)</strong> nos slots.
-</p>
 
----
-
-### ⚠️ Desafios Enfrentados com o RFID
-
-<p align="justify">
-  A decisão de substituir os leitores RFID por botões mecânicos foi fundamentada nos seguintes motivos:
-</p>
-
-<ul>
-  <li><strong>Conflitos no Barramento SPI:</strong> O gerenciamento simultâneo de 4 leitores RFID compartilhando as mesmas linhas de dados do Arduino Uno apresentou alta complexidade de software, gerando atrasos na leitura e falsos positivos.</li>
-  <li><strong>Problemas de Alimentação:</strong> Instabilidade na alimentação de 3.3V / Problemas de mau contato crônico na protoboard / Queima de um dos módulos durante as soldas.</li>
-</ul>
-
----
-
-### 🎯 O Impacto na Experiência do Usuário
-
-<p align="justify">
-  Apesar da substituição dos componentes internos, é importante destacar que <strong>a dinâmica lúdica, a lógica pedagógica e o objetivo do jogo permaneceram rigorosamente os mesmos</strong>. Os botões físicos foram posicionados estrategicamente no fundo de cada slot para que o próprio peso do cubo (ou o ato de encaixá-lo) acione o mecanismo. Dessa forma, o protótipo mantém sua entrega de valor focada na acessibilidade e no estímulo sensorial para crianças com TEA.
+  A decisão de substituir os leitores RFID por botões mecânicos foi o resultado de muitas horas de debugging. Passamos pente fino atrás de pente fino e mesmo assim, os RFIDs não funcionavam mais sem motivo aparente. Nem com jumpers, nem com solda, nem com fios robustos. Um mistério. Tudo com continuidade e propriamente alimentado (com uma placa reguladora MB102).
+  Professores, monitores, colegas de outros grupos, todos que avaliavam nosso circuito chegavam à mesma conclusão: do jeito que estava montado, era para funcionar. À tarde da quinta-feira decidimos levar a frente o nosso plano B, ao invés da seleção musical ser feita através de tags NFC e leitores, as músicas estariam em playlists e os botões serviriam para pular/dar play.
+  
+Recontextualizamos os materiais que tínhamos disponíveis e conseguimos adaptar nosso sistema para que alcansasse os objetivos traçados pelo esboço inicial do projeto, mantendo a proposta lúdica, a lógica pedagógica e seu objetivo. Dessa forma, o protótipo mantém sua entrega de valor focada na acessibilidade e no estímulo sensorial para crianças com TEA.
 </p>
 
 ---
