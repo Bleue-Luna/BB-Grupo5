@@ -37,18 +37,20 @@
 ## 🕹️ Como Alternar entre os Modos?
 
 <p align="justify">
-  Para alternar entre os modos presentes no <strong>BeatBlock</strong>, basta girar o potenciômetro até o limite. Ao fazer isso, a interface mudará o comportamento do jogo.
+  Para alternar entre os modos presentes no <strong>BitBlock</strong>, basta girar o potenciômetro até o limite. Ao fazer isso, a interface mudará o comportamento do jogo.
 </p>
 
-## 🔄 Engenharia e Adaptações de Hardware: De RFID para Botões
+
+## ⚠️ Problemas Enfrentados e Alterações no Sistema
 
 <p align="justify">
-  Durante a fase de desenvolvimento prático e testes de bancada do <strong>BeatBlock</strong>, a equipe enfrentou desafios técnicos complexos que exigiram uma mudança estratégica no projeto de hardware. Embora a arquitetura ideal previsse a identificação dos cubos via sensores RFID RC522, o circuito final foi adaptado para operar utilizando <strong>botões físicos (push buttons)</strong> nos slots.
+  Durante a fase de desenvolvimento prático e testes de bancada do <strong>BitBlock</strong>, a equipe enfrentou desafios técnicos complexos que exigiram uma mudança estratégica no projeto de hardware. Embora a arquitetura ideal previsse a identificação dos cubos via sensores RFID RC522, o circuito final foi adaptado para operar utilizando <strong>botões físicos</strong> nos slots.
 
   A decisão de substituir os leitores RFID por botões mecânicos foi o resultado de muitas horas de debugging. Passamos pente fino atrás de pente fino e mesmo assim, os RFIDs não funcionavam mais sem motivo aparente. Nem com jumpers, nem com solda, nem com fios robustos. Um mistério. Tudo com continuidade e propriamente alimentado (com uma placa reguladora MB102).
+  
   Professores, monitores, colegas de outros grupos, todos que avaliavam nosso circuito chegavam à mesma conclusão: do jeito que estava montado, era para funcionar. À tarde da quinta-feira decidimos levar a frente o nosso plano B, ao invés da seleção musical ser feita através de tags NFC e leitores, as músicas estariam em playlists e os botões serviriam para pular/dar play.
   
-Recontextualizamos os materiais que tínhamos disponíveis e conseguimos adaptar nosso sistema para que alcansasse os objetivos traçados pelo esboço inicial do projeto, mantendo a proposta lúdica, a lógica pedagógica e seu objetivo. Dessa forma, o protótipo mantém sua entrega de valor focada na acessibilidade e no estímulo sensorial para crianças com TEA.
+**Recontextualizamos os materiais que tínhamos disponíveis e conseguimos adaptar nosso sistema para que alcansasse os objetivos traçados pelo esboço inicial do projeto, mantendo a proposta lúdica, a lógica pedagógica e seu objetivo. Dessa forma, o protótipo mantém sua entrega de valor focada na acessibilidade e no estímulo sensorial para crianças com TEA.**
 </p>
 
 ---
